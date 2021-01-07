@@ -46,6 +46,7 @@ function addObject(x, y, obj) {
 const starMaterial = new THREE.MeshPhongMaterial({
     map: new THREE.ImageUtils.loadTexture("../images/starfield.jpg"), 
     side: THREE.DoubleSide, 
+    shininess: 0, 
 })
 const starGeometry = new THREE.SphereGeometry(1000, 50, 50); 
 const starField = new THREE.Mesh(starGeometry, starMaterial);
@@ -56,6 +57,8 @@ const solarSystem = new THREE.Object3D;
 addObject(0, 0, solarSystem) 
 // creates a empty object and adds it to the scene. This is the only object in the scene, everything is a child to it. The sun and each planets 'system ' is a child node on the scene. Add objects also adds it to the objects, which i imagine it rotates
 // the entire object  
+
+// solarSystem.add(starField)
 
 const sunMaterial = new THREE.MeshPhongMaterial({emissive: 0xFFFF00}); // emissive makes MeshPhongMaterial show up even when no light is hitting it. 
 const sunMesh = new THREE.Mesh(sphere, sunMaterial); 
@@ -198,7 +201,7 @@ function render(time) {
     // const speed = 1 + idx * .1; 
     // const rot = time * speed; 
     // object.rotation.x = rot * .1; 
-    object.rotation.y = time * .55; 
+    // object.rotation.y = time * .55; 
     // scene.rotation.z = rot * .1; 
    })
 
