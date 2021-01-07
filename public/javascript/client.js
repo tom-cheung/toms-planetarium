@@ -1,10 +1,13 @@
 import * as THREE from "/build/three.module.js"
 import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 import camera from './camera.js'
-import light from './light.js'
+import {pointLight, ambientLight} from './light.js'
 import { sphere, cube } from './geometries.js'
-import { addSolidGeometry, addLineGeometry, axesHelper } from './util.js'
+import { sizer } from './util.js'
 
+import { earthSystem, earthSystemObjects } from './planetary_systems/earth.js'
+import { mercurySystem, mercurySystemObjects } from './planetary_systems/mercury.js'
+import { venusSystem, venusSystemObjects } from './planetary_systems/venus.js'
 
 
 const canvas = document.querySelector('#mainCanvas') // grabs the canvas from index.html 
@@ -15,18 +18,18 @@ const orbitcontrol = new OrbitControls( camera, renderer.domElement )
 // orbitcontrol.maxDistance = 900; 
 
 const scene = new THREE.Scene(); // anything you want to draw has to be added onto the scene 
-// scene.background = new THREE.Color(0X000000)
+// scene.background = new THREE.Color(0XFFFFFF)
 // const loader = new THREE.TextureLoader(); 
 // loader.load('../images/starfield.jpg', (texture) => {
 //     scene.background = texture
 // })
 
-scene.add(light);
+scene.add(pointLight, ambientLight);
 
 /* ------------------------------------------- ADDING OBJECTS -------------------------------------------*/ 
 
 
-const objects = []; 
+let objects = []; 
 const spread = 5; 
 
 function addObject(x, y, obj) {
@@ -48,68 +51,72 @@ function addObject(x, y, obj) {
 
 /* ------------------------------------------- SCENE GRAPH DEMO -----------------------------------------*/
 
-const loader = new THREE.TextureLoader(); 
+// const loader = new THREE.TextureLoader(); 
 
-loader.load('../images/starfield.jpg', (texture) => {
-    const starMaterial = new THREE.MeshPhongMaterial({
-        map: texture, 
-        side: THREE.DoubleSide, 
-    })
-    const starGeometry = new THREE.SphereGeometry(1000, 50, 50); 
-    const starField = new THREE.Mesh(starGeometry, starMaterial);
-    scene.add(starField);
-})
+// loader.load('../images/starfield.jpg', (texture) => {
+//     const starMaterial = new THREE.MeshPhongMaterial({
+//         map: texture, 
+//         side: THREE.DoubleSide, 
+//         shininess: 0, 
+//     })
+//     const starGeometry = new THREE.SphereGeometry(5000, 30, 30); 
+//     const starField = new THREE.Mesh(starGeometry, starMaterial);
+//     scene.add(starField);
+// })
 
+// const radius = 5000; 
+// const widthSegments = 50; 
+// const heightSegments = 50; 
+// const geometry = new THREE.SphereBufferGeometry(radius, widthSegments, heightSegments); 
+// const material = new THREE.PointsMaterial({
+//     color: 'red', 
+//     size: 0.1,
+// })
 
+// const geometry = new THREE.SphereGeometry(1000, 100, 100);
+// geometry.vertices.forEach(v => {
+// 	v.endPos = v.clone();
+//   v.set(
+//   	THREE.Math.randFloat(-50, 50),
+//     THREE.Math.randFloat(-50, 50),
+//     THREE.Math.randFloat(-50, 50)
+//   );
+//   v.startPos = v.clone();
+// });
 
-// const solarSystem = new THREE.Object3D; 
-// addObject(0, 0, solarSystem) 
+// const points = new THREE.Points(geometry, material); 
+// scene.add(points)
+
+const solarSystem = new THREE.Object3D; 
+scene.add(solarSystem)
+objects.push(solarSystem)
 // creates a empty object and adds it to the scene. This is the only object in the scene, everything is a child to it. The sun and each planets 'system ' is a child node on the scene. Add objects also adds it to the objects, which i imagine it rotates
 // the entire object  
 // solarSystem.add(starField)
 
-// const sunMaterial = new THREE.MeshPhongMaterial({emissive: 0xFFFF00}); // emissive makes MeshPhongMaterial show up even when no light is hitting it. 
-// const sunMesh = new THREE.Mesh(sphere, sunMaterial); 
-// sunMesh.scale.set(5, 5, 5); 
-// solarSystem.add(sunMesh) // adds the sun as a child to the solar system, the sun is at the center of the solar system 
-// objects.push(sunMesh) // pushes the sunMesh into objects to have it rotate the sun
+const sunMaterial = new THREE.MeshPhongMaterial({
+    emissive: 0xfcba03,
+    shininess: 25, 
+}); // emissive makes MeshPhongMaterial show up even when no light is hitting it. 
+const sunGeometry = new THREE.SphereGeometry(100, 32, 32); 
+// sunGeometry.scale(30, 30, 30)
+const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial); 
+solarSystem.add(sunMesh) // adds the sun as a child to the solar system, the sun is at the center of the solar system 
+objects.push(sunMesh) // pushes the sunMesh into objects to have it rotate the sun
 
 
-// const earthSystem = new THREE.Object3D; // used to create a 'orbit system' around earth for it's moon 
-// earthSystem.position.x = 10; 
-// solarSystem.add(earthSystem);
-// objects.push(earthSystem); // pushes the earthSystem into the objects so it rotates, this is what rotates the moons 
+mercurySystem.position.x = sizer(sunMesh) * 4;
+solarSystem.add(mercurySystem);
+objects = objects.concat(mercurySystemObjects);
 
-// const earthMaterial = new THREE.MeshPhongMaterial({
-//     map: new THREE.ImageUtils.loadTexture("../images/earth.jpg"),
-//     color: 0xaaaaaa, 
-//     specular: 0x333333, 
-//     shininess: 25, 
-//     // color: 0x2233FF, 
-//     // emissive: 0x112244
-// })
-// const earthMesh = new THREE.Mesh(sphere, earthMaterial); 
-//     // addObject(5, 0, earthMesh) // adding earthMesh as another object to the scene. Both sunMesh and earthMesh would be children of 'scene'
-//     // sunMesh.add(earthMesh) 
-//     // earthMesh.position.x = 10; // 
-//         // instead of adding earthMesh as another object to the scene, you now added it as a child to the sunMesh object. The earthMesh is now 'relative' to the sunMesh. If you position the earthMesh it relative to the position of the sunMesh
-//         // It is also affected by it's scaling. This isn't good when you want objects to be of different size. 
-//         // To make it so that the earth orbits around the sun and it maintains it's scaling you can add both the sun and the earth to a empty 3D object. Say solarsystem 
-//     // solarSystem.add(earthMesh); 
-//         // if you want the sun or the earth to rotate on it's own, and not just orbit something, you need to also add them to objects 
-// earthSystem.add(earthMesh); // essentially placing earth above the earthSystem object, which is just an empty object. But it's importance is it allows you to create individual orbits 
-// objects.push(earthMesh) // you are not adding it onto the scene, just to objects array which handles the rotation 
+venusSystem.position.x = sizer(sunMesh) * 8; 
+solarSystem.add(venusSystem);
+objects = objects.concat(venusSystemObjects);
 
-// const moonSystem = new THREE.Object3D; 
-// moonSystem.position.x = 3; 
-// earthSystem.add(moonSystem);
-// // objects.push(moonSystem) // dont need to push this if there's nothing orbiting the moon 
+earthSystem.position.x = sizer(sunMesh) * 12;
+solarSystem.add(earthSystem);
+objects = objects.concat(earthSystemObjects);
 
-// const moonMaterial = new THREE.MeshPhongMaterial({color: 0x888888, emissive: 0x222222});
-// const moonMesh = new THREE.Mesh(sphere, moonMaterial);
-// moonMesh.scale.set(.5, .5, .5); 
-// moonSystem.add(moonMesh)
-// objects.push(moonMesh);
 
 
 /* ------------------------------------------- SCENE GRAPH DEMO -----------------------------------------*/
@@ -185,7 +192,7 @@ function render(time) {
     // const speed = 1 + idx * .1; 
     // const rot = time * speed; 
     // object.rotation.x = rot * .1; 
-    // object.rotation.y = time * .55; 
+    object.rotation.y = time * .55; 
     // scene.rotation.z = rot * .1; 
    })
 

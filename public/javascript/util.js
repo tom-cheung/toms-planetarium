@@ -45,3 +45,9 @@ export const axesHelper = (object) => {
     axes.rendererOrder = 1; 
     object.add(axes)
 }
+
+export const sizer = (mesh) => {
+    const boundingBox = new THREE.Box3().setFromObject(mesh);
+    const size = boundingBox.getSize().x/2
+    return size; 
+}
