@@ -1,4 +1,5 @@
 import * as THREE from "/build/three.module.js"
+import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 import camera from './camera.js'
 import light from './light.js'
 import { sphere, cube } from './geometries.js'
@@ -9,6 +10,8 @@ import { addSolidGeometry, addLineGeometry, axesHelper } from './util.js'
 const canvas = document.querySelector('#mainCanvas') // grabs the canvas from index.html 
 
 const renderer = new THREE.WebGLRenderer({canvas}) // renders stuff onto the canvas 
+
+const orbitcontrol = new OrbitControls( camera, renderer.domElement )
 
 const scene = new THREE.Scene(); // anything you want to draw has to be added onto the scene 
 scene.background = new THREE.Color(0X000000)
@@ -40,6 +43,15 @@ function addObject(x, y, obj) {
 
 /* ------------------------------------------- SCENE GRAPH DEMO -----------------------------------------*/
 
+const starMaterial = new THREE.MeshPhongMaterial({
+    map: new THREE.ImageUtils.loadTexture("../images/starfield.jpg"), 
+    side: THREE.DoubleSide, 
+})
+const starGeometry = new THREE.SphereGeometry(1000, 50, 50); 
+const starField = new THREE.Mesh(starGeometry, starMaterial);
+// scene.add(starField);
+
+
 const solarSystem = new THREE.Object3D; 
 addObject(0, 0, solarSystem) 
 // creates a empty object and adds it to the scene. This is the only object in the scene, everything is a child to it. The sun and each planets 'system ' is a child node on the scene. Add objects also adds it to the objects, which i imagine it rotates
@@ -57,7 +69,14 @@ earthSystem.position.x = 10;
 solarSystem.add(earthSystem);
 objects.push(earthSystem); // pushes the earthSystem into the objects so it rotates, this is what rotates the moons 
 
-const earthMaterial = new THREE.MeshPhongMaterial({color: 0x2233FF, emissive: 0x112244})
+const earthMaterial = new THREE.MeshPhongMaterial({
+    map: new THREE.ImageUtils.loadTexture("../images/earth.jpg"),
+    color: 0xaaaaaa, 
+    specular: 0x333333, 
+    shininess: 25, 
+    // color: 0x2233FF, 
+    // emissive: 0x112244
+})
 const earthMesh = new THREE.Mesh(sphere, earthMaterial); 
     // addObject(5, 0, earthMesh) // adding earthMesh as another object to the scene. Both sunMesh and earthMesh would be children of 'scene'
     // sunMesh.add(earthMesh) 
@@ -156,7 +175,7 @@ function resizeRendererToDisplaySize(renderer) {
 
 /* ------------------------------------------- RESIZING -------------------------------------------------*/ 
 
-
+console.log(objects)
 function render(time) {
 
     time *= 0.001; 
@@ -179,7 +198,7 @@ function render(time) {
     // const speed = 1 + idx * .1; 
     // const rot = time * speed; 
     // object.rotation.x = rot * .1; 
-    object.rotation.y = time; 
+    object.rotation.y = time * .55; 
     // scene.rotation.z = rot * .1; 
    })
 
