@@ -3,7 +3,7 @@ import * as THREE from "/build/three.module.js"
 const fov = 45; // vertical view 
 const aspect = 2; // default for the canvas 
 const near = .1; 
-const far = 10000; 
+const far = 100000; 
 const camera = new THREE.PerspectiveCamera(fov, aspect, near, far);
 // camera.position.z = 200; 
 camera.position.set(0, 5000, 0); 

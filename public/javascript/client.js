@@ -3,12 +3,17 @@ import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 import camera from './camera.js'
 import {pointLight, ambientLight} from './light.js'
 import { sphere, cube } from './geometries.js'
-import { sizer } from './util.js'
+import { sizer, getSize } from './util.js'
 
 import { earthSystem, earthSystemObjects } from './planetary_systems/earth.js'
 import { mercurySystem, mercurySystemObjects } from './planetary_systems/mercury.js'
 import { venusSystem, venusSystemObjects } from './planetary_systems/venus.js'
-
+import { marsSystem, marsSystemObjects } from './planetary_systems/mars.js'
+import { jupiterSystem, jupiterSystemObjects } from './planetary_systems/jupiter.js'
+import { saturnSystem, saturnSystemObjects } from './planetary_systems/saturn.js'
+import { uranusSystem, uranusSystemObjects } from './planetary_systems/uranus.js'
+import { neptuneSystem, neptuneSystemObjects } from './planetary_systems/neptune.js'
+import { plutoSystem, plutoSystemObjects } from './planetary_systems/pluto.js'
 
 const canvas = document.querySelector('#mainCanvas') // grabs the canvas from index.html 
 
@@ -94,29 +99,67 @@ objects.push(solarSystem)
 // the entire object  
 // solarSystem.add(starField)
 
+const sunTexture = new THREE.TextureLoader().load("../images/sun.jpg"); 
+const sunAtmosTexture = new THREE.TextureLoader().load("../images/sunimg3.jpg")
+
 const sunMaterial = new THREE.MeshPhongMaterial({
+    map: sunTexture, 
     emissive: 0xfcba03,
     shininess: 25, 
 }); // emissive makes MeshPhongMaterial show up even when no light is hitting it. 
-const sunGeometry = new THREE.SphereGeometry(100, 32, 32); 
+const sunGeometry = new THREE.SphereGeometry(200, 32, 32); 
 // sunGeometry.scale(30, 30, 30)
 const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial); 
 solarSystem.add(sunMesh) // adds the sun as a child to the solar system, the sun is at the center of the solar system 
 objects.push(sunMesh) // pushes the sunMesh into objects to have it rotate the sun
+sunMesh.name = "sun";
 
+const sunAtmosGeometry = new THREE.SphereGeometry(210, 32, 32); 
+const sunAtmosMaterial = new THREE.MeshPhongMaterial({
+    map: sunTexture,
+    transparent: true, 
+    opacity: 0.2, 
+})
+const sunAtmosMesh = new THREE.Mesh(sunAtmosGeometry, sunAtmosMaterial);
+sunAtmosMesh.name = "sun atmos"
+solarSystem.add(sunAtmosMesh);
+objects.push(sunAtmosMesh)
 
-mercurySystem.position.x = sizer(sunMesh) * 4;
+mercurySystem.position.x = sizer(sunMesh) * 5;
 solarSystem.add(mercurySystem);
 objects = objects.concat(mercurySystemObjects);
 
-venusSystem.position.x = sizer(sunMesh) * 8; 
+venusSystem.position.x = sizer(sunMesh) * 10; 
 solarSystem.add(venusSystem);
 objects = objects.concat(venusSystemObjects);
 
-earthSystem.position.x = sizer(sunMesh) * 12;
+earthSystem.position.x = sizer(sunMesh) * 15;
 solarSystem.add(earthSystem);
 objects = objects.concat(earthSystemObjects);
 
+marsSystem.position.x = sizer(sunMesh) * 20; 
+solarSystem.add(marsSystem);
+objects = objects.concat(marsSystemObjects)
+
+jupiterSystem.position.x = sizer(sunMesh) * 25; 
+solarSystem.add(jupiterSystem);
+objects = objects.concat(jupiterSystemObjects)
+
+saturnSystem.position.x = sizer(sunMesh) * 30; 
+solarSystem.add(saturnSystem);
+objects = objects.concat(saturnSystemObjects)
+
+uranusSystem.position.x = sizer(sunMesh) * 35; 
+solarSystem.add(uranusSystem);
+objects = objects.concat(uranusSystemObjects)
+
+neptuneSystem.position.x = sizer(sunMesh) * 40; 
+solarSystem.add(neptuneSystem);
+objects = objects.concat(neptuneSystemObjects)
+
+plutoSystem.position.x = sizer(sunMesh) * 45;
+solarSystem.add(plutoSystem);
+objects = objects.concat(plutoSystemObjects);
 
 
 /* ------------------------------------------- SCENE GRAPH DEMO -----------------------------------------*/
@@ -178,7 +221,11 @@ function resizeRendererToDisplaySize(renderer) {
 
 /* ------------------------------------------- RESIZING -------------------------------------------------*/ 
 
+console.log(scene.getObjectByName("earth"))
+
 function render(time) {
+
+    
 
     time *= 0.001; 
  
@@ -192,9 +239,15 @@ function render(time) {
     // const speed = 1 + idx * .1; 
     // const rot = time * speed; 
     // object.rotation.x = rot * .1; 
-    object.rotation.y = time * .55; 
+    // object.rotation.y = time * .55; 
     // scene.rotation.z = rot * .1; 
    })
+
+    scene.getObjectByName("sun").rotation.y = time * .1
+    scene.getObjectByName("sun atmos").rotation.y = time * -.1
+    scene.getObjectByName("mercury").rotation.y = time * .1;
+    scene.getObjectByName("earth").rotation.y = time * -.1;
+    scene.getObjectByName("earth atmosphere").rotation.y = time * .1
 
     renderer.render(scene, camera);
 
@@ -205,94 +258,3 @@ function render(time) {
 
 requestAnimationFrame(render) // calls the above which loops 
 
-
-
-
-
-// import * as THREE from '/build/three.module.js';
-// import { OrbitControls } from '/jsm/controls/OrbitControls.js';
-// import { FlyControls } from '/jsm/controls/FlyControls.js';
-// import Stats from '/jsm/libs/stats.module.js';
-
-
-// // scene 
-// const scene = new THREE.Scene();
-// // const sceneBackground = new THREE.TextureLoader().load("scenepic.jpg")
-// // scene.background = sceneBackground;
-
-
-// // camera 
-// const camera = new THREE.PerspectiveCamera(
-//     50, 
-//     window.innerWidth / window.innerHeight, 
-//     0.1, 
-//     1000);
-
-// camera.position.z = 100;
-
-// // renderer 
-// const renderer = new THREE.WebGLRenderer({
-//     // antialias: true
-// });
-// renderer.setSize(window.innerWidth, window.innerHeight);
-// document.body.appendChild(renderer.domElement);
-
-// // control 
-// const controls = new OrbitControls(camera, renderer.domElement);
-// // const controls = new FlyControls(camera, renderer.domElement);
-
-// // sun 
-// const texture = new THREE.TextureLoader().load("InouyeFirstLightHighResSun.jpg");
-// texture.wrapS = THREE.RepeatWrapping;
-// texture.wrapT = THREE.RepeatWrapping;
-// texture.repeat.set( 4, 4 );
-
-// //  creating the sphere 
-// const geometry = new THREE.SphereGeometry(1, 32, 32);
-// const material = new THREE.MeshBasicMaterial({
-//     map: texture,
-//     wireframe: true
-// });
-// const sphere1 = new THREE.Mesh(geometry, material);
-// sphere1.position.set( 5, 5, 5 )
-
-// const sphere2 = new THREE.Mesh(geometry, material);
-// sphere2.position.set( 0, 0, 0 )
-
-// // adding the spheres to the scene 
-// scene.add(sphere1, sphere2);
-
-// window.addEventListener('resize', () => {
-//     camera.aspect = window.innerWidth / window.innerHeight;
-//     camera.updateProjectionMatrix();
-//     renderer.setSize(window.innerWidth, window.innerHeight);
-//     render();
-// }, false);
-
-// // window.addEventListener('DOMContentLoaded', () => {
-// //     console.log('hi')
-// //     camera.aspect = window.innerWidth / window.innerHeight;
-// //     camera.updateProjectionMatrix();
-// //     renderer.setSize(window.innerWidth, window.innerHeight);
-// //     render(); 
-// // })
-
-// const stats = Stats();
-// document.body.appendChild(stats.dom);
-
-// var animate = function () {
-//     requestAnimationFrame(animate);
-//     sphere1.rotation.x += 0.01;
-//     sphere1.rotation.y += 0.01;
-//     sphere2.rotation.x += 0.01;
-//     sphere2.rotation.y += 0.01;
-//     controls.update();
-//     render();
-//     stats.update();
-// };
-
-// function render() {
-//     renderer.render(scene, camera);
-// }
-
-// animate();

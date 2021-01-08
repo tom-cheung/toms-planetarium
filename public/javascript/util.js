@@ -51,3 +51,9 @@ export const sizer = (mesh) => {
     const size = boundingBox.getSize().x/2
     return size; 
 }
+
+export const getSize = (object) => {
+    const boundingBox = new THREE.Box3().setFromObject(object);
+    const size = boundingBox.getSize()
+    return size;
+}

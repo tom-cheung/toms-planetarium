@@ -1,0 +1,1 @@
+emissive makes MeshPhongMaterial show up even when no light is hitting it. 

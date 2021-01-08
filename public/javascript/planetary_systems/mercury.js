@@ -11,5 +11,6 @@ const mercuryMaterial = new THREE.MeshPhongMaterial({
     emissive: 0x5a5c5c,
 })
 const mercuryMesh = new THREE.Mesh(mercuryGeometry, mercuryMaterial);
+mercuryMesh.name = "mercury"
 mercurySystem.add(mercuryMesh);
 mercurySystemObjects.push(mercuryMesh)

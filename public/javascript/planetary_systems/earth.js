@@ -6,14 +6,29 @@ export const earthSystemObjects = [];
 export const earthSystem = new THREE.Object3D; 
 earthSystemObjects.push(earthSystem);
 
+const earthTexture = new THREE.TextureLoader().load("../../images/earth.jpg")
+const earthAtmosTexture = new THREE.TextureLoader().load("../../images/clouds.png")
 const earthMaterial = new THREE.MeshPhongMaterial({
+    map: earthTexture, 
     shininess: 25,
     emissive: 0x4287f5,
 });
 const earthGeometry = new THREE.SphereGeometry(20, 32, 32);
 const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
+earthMesh.name = "earth"
 earthSystem.add(earthMesh)
 earthSystemObjects.push(earthMesh)
+
+const earthAtmosGeometry = new THREE.SphereGeometry(21, 32, 32);
+const earthAtmosMaterial = new THREE.MeshPhongMaterial({
+    map: earthAtmosTexture, 
+    transparent: true, 
+    opacity: 0.3, 
+})
+const earthAtmosMesh = new THREE.Mesh(earthAtmosGeometry, earthAtmosMaterial)
+earthAtmosMesh.name = "earth atmosphere"
+earthSystem.add(earthAtmosMesh)
+earthSystemObjects.push(earthAtmosMesh)
 
 const moonSystem = new THREE.Object3D; 
 moonSystem.position.x = sizer(earthMesh) * 2; 
