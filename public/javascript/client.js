@@ -15,10 +15,14 @@ import { uranusSystem, uranusSystemObjects } from './planetary_systems/uranus.js
 import { neptuneSystem, neptuneSystemObjects } from './planetary_systems/neptune.js'
 import { plutoSystem, plutoSystemObjects } from './planetary_systems/pluto.js'
 
+
+const testbtn = document.getElementById("testButton")
+testbtn.addEventListener("click", () => {
+    requestAnimationFrame(renderAll)
+})
+
 const canvas = document.querySelector('#mainCanvas') // grabs the canvas from index.html 
-
 const renderer = new THREE.WebGLRenderer({canvas}) // renders stuff onto the canvas 
-
 const orbitcontrol = new OrbitControls( camera, renderer.domElement )
 // orbitcontrol.maxDistance = 900; 
 
@@ -221,11 +225,7 @@ function resizeRendererToDisplaySize(renderer) {
 
 /* ------------------------------------------- RESIZING -------------------------------------------------*/ 
 
-console.log(scene.getObjectByName("earth"))
-
-function render(time) {
-
-    
+function renderAll(time) {
 
     time *= 0.001; 
  
@@ -235,13 +235,6 @@ function render(time) {
         camera.updateProjectionMatrix();
     }
 
-   objects.forEach((object, idx) => { 
-    // const speed = 1 + idx * .1; 
-    // const rot = time * speed; 
-    // object.rotation.x = rot * .1; 
-    // object.rotation.y = time * .55; 
-    // scene.rotation.z = rot * .1; 
-   })
 
     scene.getObjectByName("sun").rotation.y = time * .1
     scene.getObjectByName("sun atmos").rotation.y = time * -.1
@@ -251,10 +244,10 @@ function render(time) {
 
     renderer.render(scene, camera);
 
-    requestAnimationFrame(render) // recursion! loops, requestAnimationFrame passes in the time 
+    requestAnimationFrame(renderAll) // recursion! loops, requestAnimationFrame passes in the time 
 }
 
 
 
-requestAnimationFrame(render) // calls the above which loops 
+// requestAnimationFrame(render) // calls the above which loops 
 
