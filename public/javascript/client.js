@@ -16,15 +16,66 @@ import { neptuneSystem, neptuneSystemObjects } from './planetary_systems/neptune
 import { plutoSystem, plutoSystemObjects } from './planetary_systems/pluto.js'
 
 
-const testbtn = document.getElementById("testButton")
-testbtn.addEventListener("click", () => {
+const sun = document.getElementById("all")
+sun.addEventListener("click", () => {
+    camera.position.set(0, 100000, 0)
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(solarSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(solarSystem)) 
     requestAnimationFrame(renderAll)
+})
+
+const earth = document.getElementById("earth")
+earth.addEventListener("click", () => {
+    camera.position.set(...getVec(earthSystem))
+    camera.position.y = 100
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(earthSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(earthSystem)) 
+    requestAnimationFrame(viewEarth)
+})
+
+const saturn = document.getElementById("saturn")
+saturn.addEventListener("click", () => {
+    console.log('hi')
+    camera.position.set(...getVec(saturnSystem))
+    camera.position.y = 400
+    camera.position.z = 400
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(saturnSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(saturnSystem)) 
+    requestAnimationFrame(viewEarth)
+})
+
+const jupiter = document.getElementById("jupiter")
+jupiter.addEventListener("click", () => {
+    console.log('hi')
+    camera.position.set(...getVec(jupiterSystem))
+    camera.position.y = 400
+    camera.position.z = 400
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(jupiterSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(jupiterSystem)) 
+    requestAnimationFrame(viewEarth)
+})
+
+const testbtn = document.getElementById("test")
+testbtn.addEventListener("click", () => {
+    camera.position.set(0, 1000, 0)
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(solarSystem)))
+    const testObj = new THREE.Object3D; 
+    testObj.name = "sunCam"
+    scene.add(testObj)
+    solarSystem.add(testObj)
+    testObj.add(camera)
+    requestAnimationFrame(testFnc)
 })
 
 const canvas = document.querySelector('#mainCanvas') // grabs the canvas from index.html 
 const renderer = new THREE.WebGLRenderer({canvas}) // renders stuff onto the canvas 
 const orbitcontrol = new OrbitControls( camera, renderer.domElement )
-// orbitcontrol.maxDistance = 900; 
+orbitcontrol.maxDistance = 200000; 
 
 const scene = new THREE.Scene(); // anything you want to draw has to be added onto the scene 
 // scene.background = new THREE.Color(0XFFFFFF)
@@ -60,18 +111,21 @@ function addObject(x, y, obj) {
 
 /* ------------------------------------------- SCENE GRAPH DEMO -----------------------------------------*/
 
-// const loader = new THREE.TextureLoader(); 
+const loader = new THREE.TextureLoader(); 
 
-// loader.load('../images/starfield.jpg', (texture) => {
-//     const starMaterial = new THREE.MeshPhongMaterial({
-//         map: texture, 
-//         side: THREE.DoubleSide, 
-//         shininess: 0, 
-//     })
-//     const starGeometry = new THREE.SphereGeometry(5000, 30, 30); 
-//     const starField = new THREE.Mesh(starGeometry, starMaterial);
-//     scene.add(starField);
-// })
+loader.load('../images/starfield.jpg', (texture) => {
+    // texture.wrap = THREE.RepeatWrapping;
+
+    const starMaterial = new THREE.MeshBasicMaterial({
+        map: texture, 
+        side: THREE.DoubleSide, 
+        transparent: true, 
+        opacity: .4,
+    })
+    const starGeometry = new THREE.SphereGeometry(500000, 30, 30); 
+    const starField = new THREE.Mesh(starGeometry, starMaterial);
+    scene.add(starField);
+})
 
 // const radius = 5000; 
 // const widthSegments = 50; 
@@ -111,14 +165,14 @@ const sunMaterial = new THREE.MeshPhongMaterial({
     emissive: 0xfcba03,
     shininess: 25, 
 }); // emissive makes MeshPhongMaterial show up even when no light is hitting it. 
-const sunGeometry = new THREE.SphereGeometry(200, 32, 32); 
+const sunGeometry = new THREE.SphereGeometry(4326, 32, 32); 
 // sunGeometry.scale(30, 30, 30)
 const sunMesh = new THREE.Mesh(sunGeometry, sunMaterial); 
 solarSystem.add(sunMesh) // adds the sun as a child to the solar system, the sun is at the center of the solar system 
 objects.push(sunMesh) // pushes the sunMesh into objects to have it rotate the sun
 sunMesh.name = "sun";
 
-const sunAtmosGeometry = new THREE.SphereGeometry(210, 32, 32); 
+const sunAtmosGeometry = new THREE.SphereGeometry(4327, 32, 32); 
 const sunAtmosMaterial = new THREE.MeshPhongMaterial({
     map: sunTexture,
     transparent: true, 
@@ -164,6 +218,14 @@ objects = objects.concat(neptuneSystemObjects)
 plutoSystem.position.x = sizer(sunMesh) * 45;
 solarSystem.add(plutoSystem);
 objects = objects.concat(plutoSystemObjects);
+
+let getVec = (position) => {
+    let x = position.position.x
+    let y = position.position.y
+    let z = position.position.z
+    // let vec = new THREE.Vector3(x, y, z)
+    return [x, y, z]
+}
 
 
 /* ------------------------------------------- SCENE GRAPH DEMO -----------------------------------------*/
@@ -226,7 +288,6 @@ function resizeRendererToDisplaySize(renderer) {
 /* ------------------------------------------- RESIZING -------------------------------------------------*/ 
 
 function renderAll(time) {
-
     time *= 0.001; 
  
     if(resizeRendererToDisplaySize(renderer)) {
@@ -235,18 +296,58 @@ function renderAll(time) {
         camera.updateProjectionMatrix();
     }
 
-
+    // solarSystem.rotation.y = time * .1
     scene.getObjectByName("sun").rotation.y = time * .1
-    scene.getObjectByName("sun atmos").rotation.y = time * -.1
+    scene.getObjectByName("sun atmos").rotation.y = time * .3
+    scene.getObjectByName("mercurySystem").rotation.x = time * .1;
     scene.getObjectByName("mercury").rotation.y = time * .1;
-    scene.getObjectByName("earth").rotation.y = time * -.1;
-    scene.getObjectByName("earth atmosphere").rotation.y = time * .1
+
+    scene.getObjectByName("earthSystem").rotation.y = time * .1; 
+    scene.getObjectByName("earth").rotation.y = time * .1;
+    scene.getObjectByName("earthAtmos").rotation.y = time * .05
+    
+
+    scene.getObjectByName("jupiterSystem").rotation.y = time * .1; 
+    scene.getObjectByName("jupiter").rotation.y = time * .1;
+
+    scene.getObjectByName("saturnSystem").rotation.y = time * .1;
+    scene.getObjectByName("saturn").rotation.y = time * .1;
+
 
     renderer.render(scene, camera);
 
     requestAnimationFrame(renderAll) // recursion! loops, requestAnimationFrame passes in the time 
 }
 
+
+function viewEarth(time) {
+    time *= 0.001; 
+ 
+    if(resizeRendererToDisplaySize(renderer)) {
+        const canvas = renderer.domElement; // renderer.domElement is the canvas you're rendering on 
+        camera.aspect = canvas.clientWidth / canvas.clientHeight; 
+        camera.updateProjectionMatrix();
+    }
+
+    renderer.render(scene, camera);
+
+    requestAnimationFrame(viewEarth)
+}
+
+function testFnc(time) {
+    time *= 0.001; 
+    if(resizeRendererToDisplaySize(renderer)) {
+        const canvas = renderer.domElement; // renderer.domElement is the canvas you're rendering on 
+        camera.aspect = canvas.clientWidth / canvas.clientHeight; 
+        camera.updateProjectionMatrix();
+    }
+
+    scene.getObjectByName("sunCam").rotation.x = time * .1; 
+
+    renderer.render(scene, camera)
+
+    requestAnimationFrame(testFnc)
+}
 
 
 // requestAnimationFrame(render) // calls the above which loops 

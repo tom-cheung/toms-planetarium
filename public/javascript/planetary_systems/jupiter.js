@@ -3,18 +3,24 @@ import { sizer } from "../util.js"
 
 export const jupiterSystemObjects = []; 
 export const jupiterSystem = new THREE.Object3D; 
+jupiterSystem.name = "jupiterSystem"
 jupiterSystemObjects.push(jupiterSystem)
 
-const jupiterMaterial = new THREE.MeshPhongMaterial({
+const jupiterTexture = new THREE.TextureLoader().load("../../images/jupiter.jpg")
+
+const jupiterMaterial = new THREE.MeshBasicMaterial({
+    map: jupiterTexture,
     emissive: 0xf56942,
-    shininess: 25,
+    // shininess: 25,
 }); 
-const jupiterGeometry = new THREE.SphereGeometry(20, 32, 32);
+const jupiterGeometry = new THREE.SphereGeometry(434, 32, 32);
 const jupiterMesh = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
+jupiterMesh.name = "jupiter"
 jupiterSystem.add(jupiterMesh);
 jupiterSystemObjects.push(jupiterMesh)
 
 const europaOrbit = new THREE.Object3D; 
+
 europaOrbit.position.x = sizer(jupiterMesh) * 2; 
 jupiterSystem.add(europaOrbit)
 jupiterSystemObjects.push(europaOrbit)

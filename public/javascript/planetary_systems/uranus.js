@@ -9,7 +9,7 @@ const uranusMaterial = new THREE.MeshPhongMaterial({
     emissive: 0xf56942,
     shininess: 25,
 }); 
-const uranusGeometry = new THREE.SphereGeometry(20, 32, 32);
+const uranusGeometry = new THREE.SphereGeometry(158, 32, 32);
 const uranusMesh = new THREE.Mesh(uranusGeometry, uranusMaterial);
 uranusSystem.add(uranusMesh);
 uranusSystemObjects.push(uranusMesh)

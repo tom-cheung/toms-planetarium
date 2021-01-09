@@ -5,7 +5,7 @@ export const venusSystemObjects = [];
 export const venusSystem = new THREE.Object3D; 
 venusSystemObjects.push(venusSystem);
 
-const venusGeometry = new THREE.SphereGeometry(20, 32, 32);
+const venusGeometry = new THREE.SphereGeometry(38, 32, 32);
 const venusMaterial = new THREE.MeshPhongMaterial({
     emissive: 0x5a5c5c,
 })

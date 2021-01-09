@@ -6,7 +6,7 @@ export const marsSystemObjects = [];
 export const marsSystem = new THREE.Object3D; 
 marsSystemObjects.push(marsSystem);
 
-const marsGeometry = new THREE.SphereGeometry(20, 32, 32);
+const marsGeometry = new THREE.SphereGeometry(21, 32, 32);
 const marsMaterial = new THREE.MeshPhongMaterial({
     emissive: 0xf56942,
     shininess: 25, 
