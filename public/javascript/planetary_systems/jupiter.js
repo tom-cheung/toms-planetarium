@@ -6,12 +6,12 @@ export const jupiterSystem = new THREE.Object3D;
 jupiterSystem.name = "jupiterSystem"
 jupiterSystemObjects.push(jupiterSystem)
 
-const jupiterTexture = new THREE.TextureLoader().load("../../images/jupiter.jpg")
+const jupiterTexture = new THREE.TextureLoader().load("../../images/jupitermap.jpg")
 
 const jupiterMaterial = new THREE.MeshBasicMaterial({
     map: jupiterTexture,
-    emissive: 0xf56942,
-    // shininess: 25,
+    specular: 0xff0000,
+    shininess: 100,  
 }); 
 const jupiterGeometry = new THREE.SphereGeometry(434, 32, 32);
 const jupiterMesh = new THREE.Mesh(jupiterGeometry, jupiterMaterial);
