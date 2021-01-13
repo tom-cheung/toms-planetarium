@@ -2,7 +2,6 @@ import * as THREE from "/build/three.module.js"
 import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 import camera from './camera.js'
 import {pointLight, ambientLight} from './light.js'
-import { sphere, cube } from './geometries.js'
 import { sizer, getSize } from './util.js'
 
 import { earthSystem, earthSystemObjects } from './planetary_systems/earth.js'
@@ -16,153 +15,16 @@ import { neptuneSystem, neptuneSystemObjects } from './planetary_systems/neptune
 import { plutoSystem, plutoSystemObjects } from './planetary_systems/pluto.js'
 
 
-// const all = document.getElementById("all")
-// all.addEventListener("click", () => {
-//     camera.position.set(0, 100000, 0)
-//     camera.up.set(0, 0, 1);
-//     camera.lookAt(new THREE.Vector3(...getVec(solarSystem)))
-//     orbitcontrol.target = new THREE.Vector3(...getVec(solarSystem)) 
-//     requestAnimationFrame(renderAll)
-// })
-
-const sun = document.getElementById("sun")
-sun.addEventListener("click", () => {
-    let [x, y, z] = Object.values(getSize(sunMesh))
-    camera.position.set(x, y, z)
-    camera.up.set(0, 0, 1); 
-    camera.lookAt(new THREE.Vector3(...getVec(sunMesh)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(sunMesh))
-    requestAnimationFrame(viewTarget)
-})
-
-const mercury = document.getElementById("mercury")
-mercury.addEventListener("click", () => {
-    camera.position.set(...getVec(mercurySystem))
-    camera.position.y = 100
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(mercurySystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(mercurySystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const venus = document.getElementById("venus")
-venus.addEventListener("click", () => {
-    // console.log(getVec(venusSystem))
-    // console.log(getVec(scene.getObjectByName("venus")))
-    camera.position.set(...getVec(venusSystem))
-    camera.position.y = 100
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(venusSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(venusSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-
-const earth = document.getElementById("earth")
-earth.addEventListener("click", () => {
-    camera.position.set(...getVec(earthSystem))
-    camera.position.y = 100
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(earthSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(earthSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const mars = document.getElementById("mars")
-mars.addEventListener("click", () => {
-    camera.position.set(...getVec(marsSystem))
-    camera.position.y = 100
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(marsSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(marsSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const saturn = document.getElementById("saturn")
-saturn.addEventListener("click", () => {
-    console.log('hi')
-    camera.position.set(...getVec(saturnSystem))
-    camera.position.y = 1000
-    camera.position.z = 1000
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(saturnSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(saturnSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const jupiter = document.getElementById("jupiter")
-jupiter.addEventListener("click", () => {
-    camera.position.set(...getVec(jupiterSystem))
-    camera.position.y = 1000
-    camera.position.z = 1000
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(jupiterSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(jupiterSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const uranus = document.getElementById("uranus")
-uranus.addEventListener("click", () => {
-    camera.position.set(...getVec(uranusSystem))
-    camera.position.y = 400
-    camera.position.z = 400
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(uranusSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(uranusSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const neptune = document.getElementById("neptune")
-neptune.addEventListener("click", () => {
-    camera.position.set(...getVec(neptuneSystem))
-    camera.position.y = 400
-    camera.position.z = 400
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(neptuneSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(neptuneSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const pluto = document.getElementById("pluto")
-pluto.addEventListener("click", () => {
-    camera.position.set(...getVec(plutoSystem))
-    camera.position.y = 400
-    camera.position.z = 400
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(plutoSystem)))
-    orbitcontrol.target = new THREE.Vector3(...getVec(plutoSystem)) 
-    requestAnimationFrame(viewTarget)
-})
-
-const testbtn = document.getElementById("test")
-testbtn.addEventListener("click", () => {
-    camera.position.set(0, 1000, 0)
-    camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(solarSystem)))
-    const testObj = new THREE.Object3D; 
-    testObj.name = "sunCam"
-    scene.add(testObj)
-    solarSystem.add(testObj)
-    testObj.add(camera)
-    requestAnimationFrame(testFnc)
-})
-
 const canvas = document.querySelector('#mainCanvas') // grabs the canvas from index.html 
 const renderer = new THREE.WebGLRenderer({canvas}) // renders stuff onto the canvas 
 const orbitcontrol = new OrbitControls( camera, renderer.domElement )
 orbitcontrol.maxDistance = 500000; 
 
 const scene = new THREE.Scene(); // anything you want to draw has to be added onto the scene 
-// scene.background = new THREE.Color(0XFFFFFF)
-// const loader = new THREE.TextureLoader(); 
-// loader.load('../images/starfield.jpg', (texture) => {
-//     scene.background = texture
-// })
 
 scene.add(pointLight, ambientLight);
 
 /* ------------------------------------------- ADDING OBJECTS -------------------------------------------*/ 
-
 
 let objects = []; 
 const spread = 5; 
@@ -174,7 +36,6 @@ function addObject(x, y, obj) {
     scene.add(obj);
     objects.push(obj)
 }
-
 
 // addSolidGeometry(0, 0, sphere, addObject)
 
@@ -257,6 +118,17 @@ const sunAtmosMesh = new THREE.Mesh(sunAtmosGeometry, sunAtmosMaterial);
 sunAtmosMesh.name = "sun atmos"
 solarSystem.add(sunAtmosMesh);
 objects.push(sunAtmosMesh)
+
+const mercuryOrbitInnerRadius = sizer(sunMesh) * 100;
+const mercuryOrbitGeo = new THREE.RingBufferGeometry(5000, 5100, 180, 8, 100)
+const mercuryOrbitMaterial = new THREE.MeshPhongMaterial({
+    side: THREE.DoubleSide, 
+    shininess: 25,
+    emissive: 0xcc9900,
+})
+const mercuryOrbitMesh = new THREE.Mesh(mercuryOrbitGeo, mercuryOrbitMaterial)
+mercuryOrbitMesh.rotation.x = Math.PI / 2; 
+solarSystem.add(mercuryOrbitMesh)
 
 mercurySystem.position.x = sizer(sunMesh) * 5;
 solarSystem.add(mercurySystem);
@@ -409,7 +281,7 @@ function renderAll(time) {
 
     camera.position.set(0, 100000, 0)
     camera.up.set(0, 0, 1);
-    camera.lookAt(new THREE.Vector3(...getVec(solarSystem)))
+    // camera.lookAt(new THREE.Vector3(...getVec(solarSystem)))
     orbitcontrol.target = new THREE.Vector3(...getVec(solarSystem)) 
 
 requestAnimationFrame(renderAll)
@@ -447,3 +319,123 @@ function testFnc(time) {
 
 // requestAnimationFrame(render) // calls the above which loops 
 
+const sun = document.getElementById("sun")
+sun.addEventListener("click", () => {
+    let [x, y, z] = Object.values(getSize(sunMesh))
+    camera.position.set(x, y, z)
+    camera.up.set(0, 0, 1); 
+    camera.lookAt(new THREE.Vector3(...getVec(sunMesh)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(sunMesh))
+    requestAnimationFrame(viewTarget)
+})
+
+const mercury = document.getElementById("mercury")
+mercury.addEventListener("click", () => {
+    camera.position.set(...getVec(mercurySystem)) // sets the camera right on top of mercury 
+        // notice this would return 0, 0, 0 for the mercury mesh because its position relative to its parent (mercurySystem) is at the 
+        // center, therefore 0, 0, 0  
+    camera.position.y = 15;
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(mercurySystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(mercurySystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const venus = document.getElementById("venus")
+venus.addEventListener("click", () => {
+    camera.position.set(...getVec(venusSystem))
+    camera.position.y = 100
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(venusSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(venusSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+
+const earth = document.getElementById("earth")
+earth.addEventListener("click", () => {
+    camera.position.set(...getVec(earthSystem))
+    camera.position.y = 100
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(earthSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(earthSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const mars = document.getElementById("mars")
+mars.addEventListener("click", () => {
+    camera.position.set(...getVec(marsSystem))
+    camera.position.y = 100
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(marsSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(marsSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const saturn = document.getElementById("saturn")
+saturn.addEventListener("click", () => {
+    camera.position.set(...getVec(saturnSystem))
+    camera.position.y = 1000
+    camera.position.z = 1000
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(saturnSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(saturnSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const jupiter = document.getElementById("jupiter")
+jupiter.addEventListener("click", () => {
+    camera.position.set(...getVec(jupiterSystem))
+    camera.position.y = 1000
+    camera.position.z = 1000
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(jupiterSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(jupiterSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const uranus = document.getElementById("uranus")
+uranus.addEventListener("click", () => {
+    camera.position.set(...getVec(uranusSystem))
+    camera.position.y = 400
+    camera.position.z = 400
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(uranusSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(uranusSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const neptune = document.getElementById("neptune")
+neptune.addEventListener("click", () => {
+    camera.position.set(...getVec(neptuneSystem))
+    camera.position.y = 400
+    camera.position.z = 400
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(neptuneSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(neptuneSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const pluto = document.getElementById("pluto")
+pluto.addEventListener("click", () => {
+    camera.position.set(...getVec(plutoSystem))
+    camera.position.y = 400
+    camera.position.z = 400
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(plutoSystem)))
+    orbitcontrol.target = new THREE.Vector3(...getVec(plutoSystem)) 
+    requestAnimationFrame(viewTarget)
+})
+
+const testbtn = document.getElementById("test")
+testbtn.addEventListener("click", () => {
+    camera.position.set(0, 1000, 0)
+    camera.up.set(0, 0, 1);
+    camera.lookAt(new THREE.Vector3(...getVec(solarSystem)))
+    const testObj = new THREE.Object3D; 
+    testObj.name = "sunCam"
+    scene.add(testObj)
+    solarSystem.add(testObj)
+    testObj.add(camera)
+    requestAnimationFrame(testFnc)
+})
