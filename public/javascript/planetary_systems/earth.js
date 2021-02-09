@@ -1,50 +1,57 @@
 import * as THREE from "/build/three.module.js";
-import { sizer } from "../util.js"
+import {createRingOrbit, planetData, getTube} from "../util.js";
 
-export const earthSystemObjects = []; 
+const earthData = planetData(365.26, 0.015, 25.3, "earth", null, 1, 32); 
 
-export const earthSystem = new THREE.Object3D; 
-earthSystem.name = "earthSystem"
-earthSystemObjects.push(earthSystem);
+export const earthOrbit = createRingOrbit(earthData.sunDistance);
 
-const earthTexture = new THREE.TextureLoader().load("../../images/earth.jpg")
-const earthAtmosTexture = new THREE.TextureLoader().load("../../images/clouds.png")
+export const tubeOrbit = getTube(25.3, .1, 8, 32, 0x757064, "ring", 0);
 
-const earthMaterial = new THREE.MeshPhongMaterial({
-    map: earthTexture, 
-    shininess: 25,
-    emissive: 0x4287f5,
-});
-const earthGeometry = new THREE.SphereGeometry(40, 32, 32);
-const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
-earthMesh.name = "earth"
-earthSystem.add(earthMesh)
-earthSystemObjects.push(earthMesh)
 
-const earthAtmosGeometry = new THREE.SphereGeometry(41, 32, 32);
-const earthAtmosMaterial = new THREE.MeshPhongMaterial({
-    map: earthAtmosTexture, 
-    transparent: true, 
-    opacity: 0.3, 
-})
-const earthAtmosMesh = new THREE.Mesh(earthAtmosGeometry, earthAtmosMaterial)
-earthAtmosMesh.name = "earthAtmos"
-earthSystem.add(earthAtmosMesh)
-earthSystemObjects.push(earthAtmosMesh)
+// export const earthSystemObjects = []; 
 
-const moonSystem = new THREE.Object3D; 
-moonSystem.position.x = sizer(earthMesh) * 2; 
-earthSystem.add(moonSystem)
-earthSystemObjects.push(moonSystem)
+// export const earthSystem = new THREE.Object3D; 
+// earthSystem.name = "earthSystem"
+// earthSystemObjects.push(earthSystem);
 
-const moonGeometry = new THREE.SphereGeometry(20*.27, 32, 32);
-const moonMaterial = new THREE.MeshPhongMaterial({
-    // shininess: 25, 
-    emissive: 0x222222, 
-})
-const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
-moonSystem.add(moonMesh)
-earthSystemObjects.push(moonMesh)
+// const earthTexture = new THREE.TextureLoader().load("../../images/earth.jpg")
+// const earthAtmosTexture = new THREE.TextureLoader().load("../../images/clouds.png")
+
+// const earthMaterial = new THREE.MeshPhongMaterial({
+//     map: earthTexture, 
+//     shininess: 25,
+//     emissive: 0x4287f5,
+// });
+// const earthGeometry = new THREE.SphereGeometry(40, 32, 32);
+// const earthMesh = new THREE.Mesh(earthGeometry, earthMaterial);
+// earthMesh.name = "earth"
+// earthSystem.add(earthMesh)
+// earthSystemObjects.push(earthMesh)
+
+// const earthAtmosGeometry = new THREE.SphereGeometry(41, 32, 32);
+// const earthAtmosMaterial = new THREE.MeshPhongMaterial({
+//     map: earthAtmosTexture, 
+//     transparent: true, 
+//     opacity: 0.3, 
+// })
+// const earthAtmosMesh = new THREE.Mesh(earthAtmosGeometry, earthAtmosMaterial)
+// earthAtmosMesh.name = "earthAtmos"
+// earthSystem.add(earthAtmosMesh)
+// earthSystemObjects.push(earthAtmosMesh)
+
+// const moonSystem = new THREE.Object3D; 
+// moonSystem.position.x = sizer(earthMesh) * 2; 
+// earthSystem.add(moonSystem)
+// earthSystemObjects.push(moonSystem)
+
+// const moonGeometry = new THREE.SphereGeometry(20*.27, 32, 32);
+// const moonMaterial = new THREE.MeshPhongMaterial({
+//     // shininess: 25, 
+//     emissive: 0x222222, 
+// })
+// const moonMesh = new THREE.Mesh(moonGeometry, moonMaterial);
+// moonSystem.add(moonMesh)
+// earthSystemObjects.push(moonMesh)
 
 
 

@@ -1,1 +1,27 @@
 emissive makes MeshPhongMaterial show up even when no light is hitting it. 
+
+new THREE.TorusGeometry(radius, tube,radialSegments, tubularSegments, arc) 
+    radius is how big the ring is (expands) 
+    tube is how big the inside tube (hole) is
+    radial segments is how many segments are along the edges
+    tubular segments is how many angles comprise the tube, 3 would make a triangle instead of a ring 
+    arc is the length of the tube, Math.Pi * 2 gives you a fully connected tube, anything less it has a gap 
+
+
+new THREE.EllipseCurve maybe more accurate for an orbit 
+
+    const curve = new THREE.EllipseCurve(
+	4,  4,            // ax, aY
+	10, 15,           // xRadius, yRadius
+	0,  2 * Math.PI,  // aStartAngle, aEndAngle
+	false,            // aClockwise
+	0                 // aRotation
+);
+
+    const points = curve.getPoints( 50 ); // how many angles around the ellipse
+    const geometry = new THREE.BufferGeometry().setFromPoints( points );
+
+    const material = new THREE.LineBasicMaterial( { color : 0xff0000 } );
+
+    // Create the final object to add to the scene
+    const ellipse = new THREE.Line( geometry, material );
