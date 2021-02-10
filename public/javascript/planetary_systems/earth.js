@@ -1,11 +1,18 @@
 import * as THREE from "/build/three.module.js";
-import {createRingOrbit, planetData, getTube} from "../util.js";
+import {getTube, createPlanet} from "../util.js";
 
-const earthData = planetData(365.26, 0.015, 25.3, "earth", null, 1, 32); 
+export const earthData = {
+    orbit: 36.5, 
+    rotation: 0, 
+    distance: 600, 
+    name: 'earth',
+    texture: "", 
+    size: 17, 
+    segments: 32, 
+}
 
-export const earthOrbit = createRingOrbit(earthData.sunDistance);
-
-export const tubeOrbit = getTube(25.3, .1, 8, 32, 0x757064, "ring", 0);
+export const earthOrbit = getTube(600, "planet", 50, 50, 0xebc334, "earthOrbit", 0);
+export const earth = createPlanet(earthData, earthData.distance, 0, 0, "phong")
 
 
 // export const earthSystemObjects = []; 

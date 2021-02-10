@@ -2,9 +2,19 @@ import * as THREE from "/build/three.module.js";
 import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 import { frontLight, backLight, getPointLight, ambientLight } from '../light/light.js';
 import { perspectiveCamera } from '../camera.js';
-import { resizeRenderer, addObject, createMaterial, addSolidGeometry, createAxes } from '../util.js';
+import { resizeRenderer, addObject, createMaterial, addSolidGeometry, createAxes, updateOrbit} from '../util.js';
 import {sunMesh} from "../planetary_systems/sun.js";
-import {earthOrbit, tubeOrbit} from "../planetary_systems/earth.js";
+
+// planet import 
+import {mercuryOrbit, mercury, mercuryData} from "../planetary_systems/mercury.js";
+import {venusOrbit, venus, venusData} from "../planetary_systems/venus.js"
+import {earthOrbit, earth, earthData} from "../planetary_systems/earth.js";
+import {marsOrbit, mars, marsData} from "../planetary_systems/mars.js"
+import {jupiterOrbit, jupiter, jupiterData} from "../planetary_systems/jupiter.js";
+import {saturnOrbit, saturn, saturnData} from "../planetary_systems/saturn.js";
+import {uranusOrbit, uranus, uranusData} from "../planetary_systems/uranus.js";
+import {neptuneOrbit, neptune, neptuneData} from "../planetary_systems/neptune.js"; 
+import {plutoOrbit, pluto, plutoData} from "../planetary_systems/pluto.js";
 
 const canvas = document.getElementById('main-canvas');
 const renderer = new THREE.WebGLRenderer({canvas});
@@ -15,8 +25,20 @@ const orbitControl = new OrbitControls(perspectiveCamera, canvas);
 
 scene.add(getPointLight(1.5, "rgb(255, 220, 180)"));
 scene.add(ambientLight);
+
+// orbits 
 scene.add(sunMesh);
-scene.add(tubeOrbit);
+scene.add(mercuryOrbit, mercury);
+scene.add(venusOrbit, venus);
+scene.add(earthOrbit, earth);
+scene.add(marsOrbit, mars);
+scene.add(jupiterOrbit, jupiter);
+scene.add(saturnOrbit, saturn);
+scene.add(uranusOrbit, uranus);
+scene.add(neptuneOrbit, neptune);
+scene.add(plutoOrbit, pluto);
+
+console.log(jupiter);
 
 const render = (time) => {
     time *= 0.001;
@@ -25,6 +47,25 @@ const render = (time) => {
         perspectiveCamera.aspect = canvas.clientWidth / canvas.clientHeight;
         perspectiveCamera.updateProjectionMatrix();
     } 
+
+    const timeNow = Date.now();
+
+    updateOrbit(mercury, mercuryData, timeNow);
+    updateOrbit(venus, venusData, timeNow);
+    updateOrbit(earth, earthData, timeNow);
+    updateOrbit(mars, marsData, timeNow);
+    updateOrbit(jupiter, jupiterData, timeNow);
+    updateOrbit(saturn, saturnData, timeNow);
+    updateOrbit(uranus, uranusData, timeNow);
+    updateOrbit(neptune, neptuneData, timeNow);
+    updateOrbit(pluto, plutoData, timeNow);
+
+    // mercury.add(perspectiveCamera); //seems to work... 
+    perspectiveCamera.lookAt(jupiter.position);
+
+    jupiter.add(perspectiveCamera);
+
+    // OrbitControls.update(); 
 
     renderer.render(scene, perspectiveCamera);
 

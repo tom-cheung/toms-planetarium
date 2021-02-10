@@ -70,14 +70,19 @@ export const getMaterial = (type, color, myTexture) => {
     }
 }
 
-export const getTube = (radius, tubeRadius, radialSeg, tubSeg, color, name, distanceFromAxis) => {
+export const getTube = (radius, type, radialSeg, tubSeg, color, name, distanceFromAxis) => {
+
+    let tubeRadius; 
+
+    if(type === "planet") {
+        tubeRadius = 1.5; 
+    }
     const tubeGeometry = new THREE.TorusGeometry(radius, tubeRadius, radialSeg, tubSeg);
     const tubeMaterial = new THREE.MeshBasicMaterial({color, side: THREE.DoubleSide});
     const myTube = new THREE.Mesh(tubeGeometry, tubeMaterial);
     myTube.name = name;
     myTube.position.set(distanceFromAxis, 0, 0); // sets only x position from center
     myTube.rotation.x = Math.PI / 2
-    // scene.add(myRing)
     return myTube; 
 }
 
@@ -112,24 +117,37 @@ export const createRingOrbit = (objDistance) => {
     return earthOrbit
 }
 
-export const createTubeOrbit = (objDistance) => {
+export const createPlanet = (planetData, x, y, z, material ) => {
+
+    let planetMaterial, planetTexture; 
+
+    if(planetData.texture && planetData.texture !== "") {
+        planetTexture = new THREE.ImageUtils.loadTexture(myData.texture); // grabs the texture from earthData 
+    }
+
+    if (material) {
+        planetMaterial = getMaterial(material, 'rgb(255, 255, 255)', planetTexture);
+    } else {
+        planetMaterial = getMaterial('lambert', 'rgb(255, 255, 255)', planetTexture)
+    } // default to this material if nothing is passed 
+
+    planetMaterial.receiveShadow = true; 
+    planetMaterial.castShadow = true; 
+    const newPlanet = makeSphere(planetMaterial, planetData.size, planetData.segments) 
+    newPlanet.receiveShadow = true; 
+    newPlanet.name = planetData.name;
+    newPlanet.position.set(x, y, z); 
+    return newPlanet;
     
+    // scene.add(myPlanet);
 }
 
-export const planetData = (orbitRate, rotationRate, sunDistance, name, texture, size, segments ) => {
-    return {
-        orbitRate, 
-        rotationRate, 
-        sunDistance, 
-        name, 
-        texture, 
-        size, 
-        segments, 
-    }
-};
+export const updateOrbit = (planet, planetData, time) => {
+    planet.position.x = Math.cos(time * (1.0 / (planetData.orbit * 200)) + 10.0) * planetData.distance
+    planet.position.z = Math.sin(time * (1.0 / (planetData.orbit * 200)) + 10.0) * planetData.distance
+}
 
 
-// 
 
 
 
