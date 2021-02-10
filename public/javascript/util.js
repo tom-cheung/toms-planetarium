@@ -148,6 +148,9 @@ export const createPlanet = (planetData, x, y, z, material ) => {
 }
 
 export const updateOrbit = (planet, planetData, time) => {
+
+    planet.rotation.y += planetData.rotation; 
+
     planet.position.x = Math.cos(time * (1.0 / (planetData.orbit * 200)) + 10.0) * planetData.distance
     planet.position.z = Math.sin(time * (1.0 / (planetData.orbit * 200)) + 10.0) * planetData.distance
 }

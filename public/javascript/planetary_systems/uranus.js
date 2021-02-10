@@ -3,8 +3,8 @@ import { getTube, createPlanet } from "../util.js"
 
 
 export const uranusData = {
-    orbit: 3102.5, 
-    rotation: 0, 
+    orbit: -3102.5, 
+    rotation: -.027, 
     distance: 1400, 
     name: 'uranus',
     texture: "../../images/uranusmap.jpg", 

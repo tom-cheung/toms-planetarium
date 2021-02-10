@@ -2,8 +2,8 @@ import * as THREE from "/build/three.module.js";
 import { createPlanet, getTube } from "../util.js";
 
 export const plutoData = {
-    orbit: 9052, 
-    rotation: 0, 
+    orbit: -9052, 
+    rotation: -.010, 
     distance: 1800, 
     name: 'neptune',
     texture: "../../images/plutomap2k.jpg", 

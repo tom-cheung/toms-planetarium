@@ -2,8 +2,8 @@ import * as THREE from "/build/three.module.js";
 import {getTube, createPlanet} from "../util.js";
 
 export const earthData = {
-    orbit: 36.5, 
-    rotation: 0, 
+    orbit: -36.5, 
+    rotation: .024, 
     distance: 600, 
     name: 'earth',
     texture: "../../images/earth.jpg", 

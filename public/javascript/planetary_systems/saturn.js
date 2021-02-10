@@ -3,8 +3,8 @@ import { getTube, createPlanet } from "../util.js"
 
 
 export const saturnData = {
-    orbit: 1058.5, 
-    rotation: 0, 
+    orbit: -1058.5, 
+    rotation: .033, 
     distance: 1200, 
     name: 'jupiter',
     texture: "../../images/saturnmap.jpg", 

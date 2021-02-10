@@ -2,8 +2,8 @@ import * as THREE from "/build/three.module.js";
 import { getTube, createPlanet } from "../util.js";
 
 export const marsData = {
-    orbit: 68.7, 
-    rotation: 0, 
+    orbit: -68.7, 
+    rotation: .023, 
     distance: 800, 
     name: 'mars',
     texture: "../../images/marsmap.jpg", 

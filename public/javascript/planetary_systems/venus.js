@@ -2,8 +2,8 @@ import * as THREE from "/build/three.module.js";
 import {getTube, createPlanet} from "../util.js"
 
 export const venusData = {
-    orbit: 22.5, 
-    rotation: 0, 
+    orbit: -22.5, 
+    rotation: -.00243, 
     distance: 400, 
     name: 'mercury',
     texture: "../../images/venusmap.jpg", 
