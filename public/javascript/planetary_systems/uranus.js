@@ -7,7 +7,7 @@ export const uranusData = {
     rotation: 0, 
     distance: 1400, 
     name: 'uranus',
-    texture: "", 
+    texture: "../../images/uranusmap.jpg", 
     size: 21, 
     segments: 32, 
 }

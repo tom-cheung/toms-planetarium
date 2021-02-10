@@ -70,15 +70,20 @@ export const getMaterial = (type, color, myTexture) => {
     }
 }
 
-export const getTube = (radius, type, radialSeg, tubSeg, color, name, distanceFromAxis) => {
+export const getTube = (radius, type, radialSeg, tubSeg, color, name, distanceFromAxis, ringTexture) => {
 
-    let tubeRadius; 
+    let tubeRadius, texture; 
 
     if(type === "planet") {
         tubeRadius = 1.5; 
+    } 
+
+    if(type === "rings") {
+        tubeRadius = 20; 
+        texture = new THREE.TextureLoader().load(ringTexture);
     }
     const tubeGeometry = new THREE.TorusGeometry(radius, tubeRadius, radialSeg, tubSeg);
-    const tubeMaterial = new THREE.MeshBasicMaterial({color, side: THREE.DoubleSide});
+    const tubeMaterial = new THREE.MeshBasicMaterial({color, side: THREE.DoubleSide, map: texture === undefined ? null : texture});
     const myTube = new THREE.Mesh(tubeGeometry, tubeMaterial);
     myTube.name = name;
     myTube.position.set(distanceFromAxis, 0, 0); // sets only x position from center
@@ -122,7 +127,7 @@ export const createPlanet = (planetData, x, y, z, material ) => {
     let planetMaterial, planetTexture; 
 
     if(planetData.texture && planetData.texture !== "") {
-        planetTexture = new THREE.ImageUtils.loadTexture(myData.texture); // grabs the texture from earthData 
+        planetTexture = new THREE.TextureLoader().load(planetData.texture); // grabs the texture from earthData 
     }
 
     if (material) {
@@ -147,6 +152,32 @@ export const updateOrbit = (planet, planetData, time) => {
     planet.position.z = Math.sin(time * (1.0 / (planetData.orbit * 200)) + 10.0) * planetData.distance
 }
 
+export const starField = (numStars, width, height) => {
+    const canvas = document.createElement('CANVAS');
+
+    canvas.width = width; 
+    canvas.height = height; 
+
+    const ctx = canvas.getContext('2d'); 
+
+    ctx.fillStyle = "black";
+    ctx.fillRect(0, 0, width, height); 
+
+    for(let i = 0; i < numStars; i++) {
+        const radius = Math.random() * 2; 
+        const x = Math.floor(Math.random() * width);
+        const y = Math.floor(Math.random() * height);
+
+        ctx.beginPath();
+        ctx.arc(x, y, radius, 0, 2 * Math.PI, false);
+        ctx.fillStyle = 'white';
+        ctx.fill();
+    }
+
+    const texture = new THREE.Texture(canvas);
+    texture.needsUpdate = true; 
+    return texture; 
+}
 
 
 

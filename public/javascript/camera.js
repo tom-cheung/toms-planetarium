@@ -3,11 +3,11 @@ import * as THREE from "/build/three.module.js"
 const fov = 40; // 75 vertical 
 const aspect = 2; 
 const near = 0.1; // 0.1 from the start of the camera position 
-const far = 10000; // up to 5 units from the start of the camera position
+const far = 100000; // up to 5 units from the start of the camera position
 export const perspectiveCamera = new THREE.PerspectiveCamera(fov, aspect, near, far);
-perspectiveCamera.position.z = 2500;
-perspectiveCamera.position.y = 2500;
-perspectiveCamera.position.x = 2500;
+perspectiveCamera.position.z = 2750;
+perspectiveCamera.position.y = 2750;
+perspectiveCamera.position.x = 2750;
 perspectiveCamera.lookAt(new THREE.Vector3(0,0,0)); // looks at this point in space. 
 
 

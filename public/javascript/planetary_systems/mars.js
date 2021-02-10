@@ -6,7 +6,7 @@ export const marsData = {
     rotation: 0, 
     distance: 800, 
     name: 'mars',
-    texture: "", 
+    texture: "../../images/marsmap.jpg", 
     size: 16, 
     segments: 32, 
 }

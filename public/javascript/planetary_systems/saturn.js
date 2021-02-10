@@ -7,13 +7,25 @@ export const saturnData = {
     rotation: 0, 
     distance: 1200, 
     name: 'jupiter',
-    texture: "", 
+    texture: "../../images/saturnmap.jpg", 
+    ringTexture: "../../images/saturnringcolor.jpg",
     size: 28, 
     segments: 32, 
 }
 
 export const saturnOrbit = getTube(1200, "planet", 50, 50, 0xebc334, "saturnOrbit", 0);
 export const saturn = createPlanet(saturnData, saturnData.distance, 0, 0, "phong");
+
+const ringTexture = new THREE.TextureLoader().load(saturnData.ringTexture);
+const ringsGeometry = new THREE.TorusGeometry(saturnData.size + 30, 20, 2, 50);
+const ringsMaterial = new THREE.MeshBasicMaterial({
+    side: THREE.DoubleSide, 
+    map: ringTexture, 
+})
+const saturnRings = new THREE.Mesh(ringsGeometry, ringsMaterial);
+saturnRings.name = "saturn rings";
+saturnRings.rotation.x = Math.PI / 2;
+saturn.add(saturnRings);
 
 
 // export const saturnSystemObjects = []; 

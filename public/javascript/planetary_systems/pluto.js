@@ -6,7 +6,7 @@ export const plutoData = {
     rotation: 0, 
     distance: 1800, 
     name: 'neptune',
-    texture: "", 
+    texture: "../../images/plutomap2k.jpg", 
     size: 7, 
     segments: 32, 
 }

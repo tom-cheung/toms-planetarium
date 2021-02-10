@@ -6,7 +6,7 @@ export const neptuneData = {
     rotation: 0, 
     distance: 1600, 
     name: 'neptune',
-    texture: "", 
+    texture: "../../images/neptunemap.jpg", 
     size: 22, 
     segments: 32, 
 }

@@ -6,7 +6,7 @@ export const jupiterData = {
     rotation: 0, 
     distance: 1000, 
     name: 'jupiter',
-    texture: "", 
+    texture: "../../images/jupitermap.jpg", 
     size: 37, 
     segments: 32, 
 }

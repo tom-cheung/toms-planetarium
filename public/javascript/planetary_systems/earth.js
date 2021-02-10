@@ -6,7 +6,7 @@ export const earthData = {
     rotation: 0, 
     distance: 600, 
     name: 'earth',
-    texture: "", 
+    texture: "../../images/earth.jpg", 
     size: 17, 
     segments: 32, 
 }
@@ -14,6 +14,17 @@ export const earthData = {
 export const earthOrbit = getTube(600, "planet", 50, 50, 0xebc334, "earthOrbit", 0);
 export const earth = createPlanet(earthData, earthData.distance, 0, 0, "phong")
 
+
+const atmosphere = new THREE.TextureLoader().load("../../images/earthcloudmap.jpg")
+const earthAtmosphereGeometry = new THREE.SphereGeometry(earthData.size + .5, earthData.segments, earthData.segments);
+const earthAtmosphereMaterial = new THREE.MeshPhongMaterial({
+        map: atmosphere, 
+        transparent: true, 
+        opacity: 0.3, 
+    })
+
+export const earthAtmosphere = new THREE.Mesh(earthAtmosphereGeometry, earthAtmosphereMaterial);
+earthAtmosphere.position.x = earthData.distance; 
 
 // export const earthSystemObjects = []; 
 

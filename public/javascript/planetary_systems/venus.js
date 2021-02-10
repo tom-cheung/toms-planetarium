@@ -6,7 +6,7 @@ export const venusData = {
     rotation: 0, 
     distance: 400, 
     name: 'mercury',
-    texture: "", 
+    texture: "../../images/venusmap.jpg", 
     size: 15, 
     segments: 32, 
 }
