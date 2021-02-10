@@ -13,5 +13,6 @@ export const sunData = {
 const sunTexture = new THREE.TextureLoader().load(sunData.texture);
 const sunMaterial = getMaterial("basic", "rgb(255, 255, 255)", sunTexture); 
 export const sun = makeSphere(sunMaterial, 75, 32);
+sun.name = sunData.name; 
 createAxes(sun);
 

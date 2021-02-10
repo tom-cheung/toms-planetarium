@@ -8,7 +8,7 @@ export const perspectiveCamera = new THREE.PerspectiveCamera(fov, aspect, near, 
 perspectiveCamera.position.z = 2750;
 perspectiveCamera.position.y = 2750;
 perspectiveCamera.position.x = 2750;
-perspectiveCamera.lookAt(new THREE.Vector3(0,0,0)); // looks at this point in space. 
+// perspectiveCamera.lookAt(new THREE.Vector3(0,0,0)); // looks at this point in space. 
 
 
 

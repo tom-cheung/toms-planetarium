@@ -4,9 +4,9 @@ import { getTube, createPlanet } from "../util.js"
 
 export const saturnData = {
     orbit: -1058.5, 
-    rotation: .033, 
+    rotation: .033,
     distance: 1200, 
-    name: 'jupiter',
+    name: 'saturn',
     texture: "../../images/saturnmap.jpg", 
     ringTexture: "../../images/saturnringcolor.jpg",
     size: 28, 
@@ -28,8 +28,9 @@ export const saturnRings = new THREE.Mesh(ringsGeometry, ringsMaterial);
 saturnRings.name = "saturn rings";
 saturnRings.rotation.x = Math.PI / 2;
 saturnRings.position.x = saturnData.distance
-// saturn.add(saturnRings);
 
+
+// create individual rings around saturn
 export const saturnsRingsArr = []; 
 const colors = [0xe6ac00, 0xb38600, 0x666699, 0x336600, 0xe6e6e6, 0xcc9900]
 

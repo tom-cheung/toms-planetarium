@@ -3,7 +3,8 @@ import { getTube, createPlanet } from "../util.js"
 
 export const mercuryData = {
     orbit: -5.86, 
-    rotation: -.0058, 
+    rotation: -.0058,
+    // rotation: 0,  
     distance: 200, 
     name: 'mercury',
     texture: "../../images/mercurymap.jpg", 
