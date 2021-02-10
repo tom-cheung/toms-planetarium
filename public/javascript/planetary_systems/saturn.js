@@ -17,15 +17,45 @@ export const saturnOrbit = getTube(1200, "planet", 50, 50, 0xebc334, "saturnOrbi
 export const saturn = createPlanet(saturnData, saturnData.distance, 0, 0, "phong");
 
 const ringTexture = new THREE.TextureLoader().load(saturnData.ringTexture);
-const ringsGeometry = new THREE.TorusGeometry(saturnData.size + 30, 20, 2, 50);
+const ringsGeometry = new THREE.TorusGeometry(saturnData.size + 1, Math.random() * .1, 2, 50);
 const ringsMaterial = new THREE.MeshBasicMaterial({
     side: THREE.DoubleSide, 
     map: ringTexture, 
+    // transparent: true, 
+    // opacity: .1, 
 })
-const saturnRings = new THREE.Mesh(ringsGeometry, ringsMaterial);
+export const saturnRings = new THREE.Mesh(ringsGeometry, ringsMaterial);
 saturnRings.name = "saturn rings";
 saturnRings.rotation.x = Math.PI / 2;
-saturn.add(saturnRings);
+saturnRings.position.x = saturnData.distance
+// saturn.add(saturnRings);
+
+export const saturnsRingsArr = []; 
+const colors = [0xe6ac00, 0xb38600, 0x666699, 0x336600, 0xe6e6e6, 0xcc9900]
+
+for(let i = 0; i < 300; i++) {
+    let distance; 
+    if(saturnsRingsArr.length < 200) {
+        distance = 5; 
+    } else {
+        distance = 7;
+    }
+    let ringGeometry = new THREE.TorusGeometry((saturnData.size + distance) + (i * .1), Math.random() * .1, 2, 50)
+    let ringMaterial = new THREE.MeshBasicMaterial({
+        side: THREE.DoubleSide, 
+        transparent: true, 
+        opacity: .4,
+        color: colors[Math.floor(Math.random() * colors.length)],
+    });
+    let ring = new THREE.Mesh(ringGeometry, ringMaterial);
+    ring.rotation.x = Math.PI / 2; 
+    // ring.position.x = saturnData.distance;
+    // saturnsRingsArr.push(ring);
+    saturn.add(ring)
+}
+
+
+
 
 
 // export const saturnSystemObjects = []; 

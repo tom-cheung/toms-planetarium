@@ -3,16 +3,16 @@ import { OrbitControls } from '/jsm/controls/OrbitControls.js';
 import { frontLight, backLight, getPointLight, ambientLight } from '../light/light.js';
 import { perspectiveCamera } from '../camera.js';
 import { resizeRenderer, addObject, createMaterial, addSolidGeometry, createAxes, updateOrbit, starField} from '../util.js';
-import {sunMesh} from "../planetary_systems/sun.js";
 
 // planet import 
 import {sky} from "../planetary_systems/skybox.js"
+import {sun, sunData} from "../planetary_systems/sun.js";
 import {mercuryOrbit, mercury, mercuryData} from "../planetary_systems/mercury.js";
 import {venusOrbit, venus, venusData} from "../planetary_systems/venus.js"
 import {earthOrbit, earth, earthAtmosphere, earthData} from "../planetary_systems/earth.js";
 import {marsOrbit, mars, marsData} from "../planetary_systems/mars.js"
 import {jupiterOrbit, jupiter, jupiterData} from "../planetary_systems/jupiter.js";
-import {saturnOrbit, saturn, saturnData} from "../planetary_systems/saturn.js";
+import {saturnOrbit, saturn, saturnRings, saturnsRingsArr, saturnData} from "../planetary_systems/saturn.js";
 import {uranusOrbit, uranus, uranusData} from "../planetary_systems/uranus.js";
 import {neptuneOrbit, neptune, neptuneData} from "../planetary_systems/neptune.js"; 
 import {plutoOrbit, pluto, plutoData} from "../planetary_systems/pluto.js";
@@ -30,7 +30,7 @@ scene.add(ambientLight);
 
 // orbits 
 scene.add(sky); 
-scene.add(sunMesh);
+scene.add(sun);
 scene.add(mercuryOrbit, mercury);
 scene.add(venusOrbit, venus);
 scene.add(earthOrbit, earth, earthAtmosphere);
@@ -51,6 +51,8 @@ const render = (time) => {
 
     const timeNow = Date.now();
 
+    sun.rotation.y += sunData.rotation; 
+
     updateOrbit(mercury, mercuryData, timeNow);
     updateOrbit(venus, venusData, timeNow);
     updateOrbit(earth, earthData, timeNow);
@@ -61,7 +63,6 @@ const render = (time) => {
     updateOrbit(uranus, uranusData, timeNow);
     updateOrbit(neptune, neptuneData, timeNow);
     updateOrbit(pluto, plutoData, timeNow);
-
 
     // perspectiveCamera.lookAt(mercury.position);
     // mercury.add(perspectiveCamera);

@@ -1,8 +1,17 @@
 import * as THREE from "/build/three.module.js"; 
 import { getMaterial, makeSphere, createAxes} from "../util.js"
 
-const sunTexture = new THREE.TextureLoader().load("../../images/sunmap.jpg");
+export const sunData = {
+    orbit: 0, 
+    rotation: .020, 
+    distance: 0, 
+    name: 'sun',
+    texture: "../../images/sunmap.jpg", 
+    size: 75, 
+    segments: 32, 
+}
+const sunTexture = new THREE.TextureLoader().load(sunData.texture);
 const sunMaterial = getMaterial("basic", "rgb(255, 255, 255)", sunTexture); 
-export const sunMesh = makeSphere(sunMaterial, 75, 32);
-createAxes(sunMesh);
+export const sun = makeSphere(sunMaterial, 75, 32);
+createAxes(sun);
 
