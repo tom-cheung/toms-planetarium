@@ -6,29 +6,130 @@
     <title>Tom's Planetarium</title>
 
     <link rel="stylesheet" href="stylesheet/styles.css">
+    <link rel="stylesheet" href="stylesheet/profile_canvas.css">
 </head>
 <body>
 
+    
+    <div id="simpleModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <span class="closeBtn">&times;</span>
+                <h2>Welcome to Tom's Planetarium</h2>
+            </div>
 
-    <div id="header-container">
-        <div id="title">
-            <h1>Planetarium</h1>
+            <div class="modal-body">
+                <p>Inspired by a clear star filled night sky, this project aims to provide some information about our solar system.</p>
+                <h3>Instructions for interacting with this model of the solar system (not to scale... yet)</h3>
+                <ul>
+                    <li>Using the scroll wheel on your mouse, you can zoom in and out of the solar system</li>
+                    <li>By default the view is centered on the sun, by clicking any of the planet buttons on the top of the page you change the focus</li>
+                    <li>Holding the left mouse button down and moving your mouse will rotate your view</li>
+                    <li>To close these instructions click the X button found on the upper right hand corner, or click anywhere outside of this window</li>
+                    <li>To reopen the instruction click the Instructions button found on the upper left hand corner of this page</li>
+                    <li>I hope you enjoy this application and please browse the additional projects listed below along with my profiles</li>
+                </ul>
+            </div>
+
+            <div class="modal-footer">
+                <div class="inner-footer">
+                    <a href="https://linkedin.com/in/thomas-cheung-38953034" class="link-tags"><div class="footer-links">LinkedIn</div></a>
+                    <a href="https://github.com/tom-cheung" class="link-tags"><div class="footer-links">Github</div></a>
+                    <a href="https://spacegear.herokuapp.com/#/" class="link-tags"><div class="footer-links">SpaceGear</div></a>
+                    <a href="https://tbdeveloped1.herokuapp.com/#/" class="link-tags"><div class="footer-links">TBDeveloped</div></a>
+                </div>
+            </div>
         </div>
+    </div>
+    
+    <div id="header-container-outer">
+        <div id="header-container-inner">
+            <button id="instruction-button" class="modal-button">Instructions</button>
+            <div id="title">
+                <h1>Tom's Planetarium</h1>
+            </div>
+            
+            <div id="button-container">
+                <div id="sun" class="planet-button">
+                    <span>Sun</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/sun.jpg" alt="" width="75" height="75">
+                    </div>
+                </div>
+                
+                <div id="mercury" class="planet-button">
+                    <span>Mercury</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/mercury.jpg" alt="" width="75" height="75">
+                    </div>
+                </div>
 
-        <div id="button-container">
-            <button id="sun">Sun</button>
-            <button id="mercury">Mercury</button>
-            <button id="venus">Venus</button>
-            <button id="earth">Earth</button>
-            <button id="mars">Mars</button>
-            <button id="jupiter">Jupiter</button>
-            <button id="saturn">Saturn</button>
-            <button id="uranus">Uranus</button>
-            <button id="neptune">Neptune</button>
-            <button id="pluto">Pluto</button>
+                <div id="venus" class="planet-button">
+                    <span>Venus</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/venus.jpg" alt="" width="75" height="75">
+                    </div>
+                </div>
+            
+                <div id="earth" class="planet-button">
+                    <span>Earth</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/earth.jpg" alt="" width="75" height="75">
+                    </div>
+
+                </div>
+            
+                <div id="mars" class="planet-button">
+                    <span>Mars</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/mars.jpg" alt="" width="75" height="75">
+                    </div>    
+                </div>
+            
+                <div id="jupiter" class="planet-button">
+                    <span>Jupiter</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/jupiter.jpg" alt="" width="75" height="75">
+                    </div>
+                </div>
+            
+                <div id="saturn" class="planet-button">
+                    <span>Saturn</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/saturn.jpg" alt="" width="75" height="75">
+                    </div>
+                </div>
+            
+                <div id="uranus" class="planet-button">
+                    <span>Uranus</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/uranus.jpg" alt="" width="75" height="75">
+                    </div>
+                </div>
+            
+                <div id="neptune" class="planet-button">
+                    <span>Neptune</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/neptune.jpg" alt="" width="75" height="75">
+                    </div>  
+                </div>
+            
+                <div id="pluto" class="planet-button">
+                    <span>Pluto</span>
+                    <div class="button-img-container">
+                        <img src="./backimg/pluto.jpg" alt="" width="75" height="75">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+    <!-- <div class="planet-profile-outer">
+        <div class="planet-profile-inner">
+            <canvas id="profile-canvas"></canvas>
+
+        </div>
+    </div> -->
 
   
     <div id="canvas-container">

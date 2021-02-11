@@ -10,6 +10,11 @@ perspectiveCamera.position.y = 2750;
 perspectiveCamera.position.x = 2750;
 // perspectiveCamera.lookAt(new THREE.Vector3(0,0,0)); // looks at this point in space. 
 
+export const profileCamera = new THREE.PerspectiveCamera(fov, aspect, near, far);
+profileCamera.position.z = 75;
+profileCamera.position.y = 75;
+profileCamera.position.x = 75;
+
 
 
 // const fov = 45; // vertical view 

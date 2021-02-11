@@ -26,6 +26,10 @@ const earthAtmosphereMaterial = new THREE.MeshPhongMaterial({
 export const earthAtmosphere = new THREE.Mesh(earthAtmosphereGeometry, earthAtmosphereMaterial);
 earthAtmosphere.position.x = earthData.distance; 
 
+export const earthCam = new THREE.Object3D; 
+earthCam.name = "earthCam";
+earthCam.position.x = earthData.distance;
+
 // export const earthSystemObjects = []; 
 
 // export const earthSystem = new THREE.Object3D; 
