@@ -143,8 +143,6 @@ export const createPlanet = (planetData, x, y, z, material ) => {
     newPlanet.name = planetData.name;
     newPlanet.position.set(x, y, z); 
     return newPlanet;
-    
-    // scene.add(myPlanet);
 }
 
 export const updateOrbit = (planet, planetData, time, stopRotate) => {

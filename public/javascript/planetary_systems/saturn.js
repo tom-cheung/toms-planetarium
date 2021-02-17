@@ -50,8 +50,6 @@ for(let i = 0; i < 300; i++) {
     });
     let ring = new THREE.Mesh(ringGeometry, ringMaterial);
     ring.rotation.x = Math.PI / 2; 
-    // ring.position.x = saturnData.distance;
-    // saturnsRingsArr.push(ring);
     saturn.add(ring)
 }
 
