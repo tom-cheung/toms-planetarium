@@ -10,6 +10,19 @@ export const findHandler = (scene, camera, control) => {
     for(let i = 0; i < buttons.length; i++) {
         buttons[i].addEventListener("click", () => 
         {
+
+            let allProfiles = document.getElementsByClassName("object-profile");
+          
+            let profile = document.getElementById(buttons[i].id + "-profile");
+
+            for(let prof of allProfiles) {
+                if(prof.id !== profile.id) {
+                    prof.style.display = "none"; 
+                } 
+            }
+
+            profile.style.display === "block" ? profile.style.display = "none" : profile.style.display = "block";
+
             let obj = scene.getObjectByName(buttons[i].id)  
             control.target = obj.position;
             control.update();
