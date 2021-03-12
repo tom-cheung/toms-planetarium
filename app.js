@@ -1,6 +1,7 @@
 const express = require('express'); // sets up the express object
 const app = express();  // executes the express object which returns something... 
 const path = require('path'); // path is used by app.use below 
+// const axios = require('axios'); 
 
 app.use(express.static(__dirname + '/public')); 
 // express.static (middleware) will default route to the index.html, see express.js documentation
@@ -12,8 +13,8 @@ app.use(express.static(__dirname + '/public'));
 // inside of client.js there are three imports. The below code allows you to access those files 
 
 app.use('/build', express.static(path.join(__dirname, 'node_modules/three/build'))); 
-
 app.use('/jsm', express.static(path.join(__dirname, 'node_modules/three/examples/jsm')));
+app.use('/axios', express.static(path.join(__dirname, 'node_modules/axios')));
 
 let port = process.env.PORT; 
 

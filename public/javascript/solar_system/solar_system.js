@@ -5,6 +5,8 @@ import { perspectiveCamera } from '../camera.js';
 import { resizeRenderer, addObject, createMaterial, addSolidGeometry, createAxes, updateOrbit, starField} from '../util.js';
 import {findHandler} from "../handlers/handlers.js";
 
+// axios
+
 // planet import  
 import {sky} from "../planetary_systems/skybox.js"
 import {sun, sunData} from "../planetary_systems/sun.js";
@@ -18,6 +20,7 @@ import {uranusOrbit, uranus, uranusData} from "../planetary_systems/uranus.js";
 import {neptuneOrbit, neptune, neptuneData} from "../planetary_systems/neptune.js"; 
 import {plutoOrbit, pluto, plutoData} from "../planetary_systems/pluto.js";
 import {systems} from "../planetary_systems/allsystems.js";
+
 
 const canvas = document.getElementById('main-canvas');
 const renderer = new THREE.WebGLRenderer({canvas});
